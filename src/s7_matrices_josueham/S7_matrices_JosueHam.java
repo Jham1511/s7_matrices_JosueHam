@@ -10,14 +10,19 @@ public class S7_matrices_JosueHam {
     static Random aleatorio = new Random();
 
     public static void main(String[] args) {
-        int opcion = 0;
+        int opcion;
 
         do {
             String menu = "----- Bienvenido al menu del programa -----"
-                    + "\n1 -> Opcion 1 (Suma elementos de la matriz)"
-                    + "\n2 -> Opcion 2(Elemento mayor de una matriz)"
-                    + "\n3 -> Opcion 3"
-                    + "\n4 -> Salir del programa"
+                    + "\n1 -> Suma elementos de la matriz"
+                    + "\n2 -> Elemento mayor de una matriz"
+                    + "\n3 -> Suma de matrices"
+                    + "\n4 -> Suma de la primera diagonal"
+                    + "\n5 -> Suma de la segunda diagonal"
+                    + "\n6 -> Suma Triangular Superior"
+                    + "\n7 -> Suma Triangular Inferior"
+                    + "\n8 -> Suma de filas"
+                    + "\n9 -> Salir del programa"
                     + "\nIngrese la opcion que desea: ";
             String input = JOptionPane.showInputDialog(null, menu, "Menu", 3);
             opcion = Integer.parseInt(input);
@@ -44,18 +49,91 @@ public class S7_matrices_JosueHam {
                     int columnas = Integer.parseInt(col);
 
                     int[][] numeros = lectura(filas, columnas);
-                    JOptionPane.showMessageDialog(null, "El elemento mayor del arreglo es:\n" + imprimir (organizar(numeros,filas, columnas)));
-                    
-                  
-                    
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "El elemento mayor del arreglo es:\n" + organizar(numeros, filas, columnas));
+
                 }//Fin case 2
                 break;
 
+                case 3: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] matriz1 = lectura(filas, columnas);
+                    int[][] matriz2 = lectura(filas, columnas);
+
+                    JOptionPane.showMessageDialog(null, "Matriz 1:\n" + imprimir(matriz1));
+                    JOptionPane.showMessageDialog(null, "Matriz 2:\n" + imprimir(matriz2));
+                    JOptionPane.showMessageDialog(null, "Matriz 2:\n" + imprimir(SumaParalela(matriz1, matriz2, filas, columnas)));
+                }//Fin case 3
+                break;
+                
+                case 4: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma de la primera diagonal es: " + sumaPrimerDiagonal(numeros));
+                    
+                }//Fin case 4
+                break;
+                
+                case 5: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma de la segunda diagonal es: " + sumaSegundaDiagonal(numeros));
+                }//Fin case 5
+                break;
+                
+                case 6: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma triangular superior es: " + TriangularSuperior(numeros));
+                }//Fin case 6
+                break;
+                
+                case 7: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma triangular inferior es: " + TriangularInferior(numeros));
+                }//Fin case 7
+                
+                case 8: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma de las filas es:\n" + imprimirJOptionPane(SumaFilas(numeros,filas)));
+                }//Fin case 8
+                break;
                 default:
                     JOptionPane.showMessageDialog(null, "Saliendo del programa...");
             }//Fin del switch
 
-        } while (opcion != 4);
+        } while (opcion != 9);
     }//Fin del main 
 
     public static int[][] lectura(int filas, int columnas) {
@@ -69,6 +147,14 @@ public class S7_matrices_JosueHam {
         return temporal;
     }
 
+    public static String imprimirJOptionPane(int[] arr) {
+        String resultado = "";
+        for (int i = 0; i < arr.length; i++) {
+            resultado += "[" + arr[i] + "]";
+        }
+        return resultado;
+    }
+    
     public static String imprimir(int[][] numeros) {
         String cadena = "";
 
@@ -92,32 +178,106 @@ public class S7_matrices_JosueHam {
         return respuesta;
     }//Fin metodo suma 
 
-    public static int[][] organizar(int[][] numeros, int filas, int columnas) {
+    public static String organizar(int[][] numeros, int filas, int columnas) {
 
-        int[][] mayores = new int[filas][columnas];
+        int numeroMayor = numeros[0][0];
 
-        for (int i = 1; i < mayores.length; i++) {
-            for (int j = 0; j < mayores[i].length - 1; j++) {
-                if (numeros[j][i] < numeros[j + 1][i + 1]) {
-                    int posGuardada = numeros[j][i];
-                    numeros[j][i] = numeros[j + 1][i + 1];
-                    numeros[j + 1][i + 1] = posGuardada;
-                }//Fin if
-            }//Fin for j
-        }//Fin for i
-        mayores = numeros;
-        return mayores;
-    }//Fin del metodo organizar mayores
-    
-    
-    public static String imprimirJOptionPane(int[][] arr) {
-        String resultado = "";
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < 10; j++) {
-                resultado += "[" + arr[i][j] + "]";
+        String mayorPosicion = "0,0";
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+
+                if (numeros[i][j] > numeroMayor) {
+                    numeroMayor = numeros[i][j];
+                    mayorPosicion = "[" + i + "," + j + "]";
+                }
             }
         }
-        return resultado;
-    }
+
+        return mayorPosicion;
+    }//Fin del metodo organizar mayores
+
+    public static int[][] SumaParalela(int[][] matriz1, int[][] matriz2, int filas, int columnas) {
+
+        int[][] matrizSuma = new int[matriz1.length][matriz1[0].length];
+
+        for (int i = 0; i < matriz1.length; i++) {
+            for (int j = 0; j < matriz1[i].length; j++) {
+                int numeroMatriz1 = matriz1[i][j];
+                int numeroMatriz2 = matriz2[i][j];
+                int suma = numeroMatriz1 + numeroMatriz2;
+                matrizSuma[i][j] = suma;
+            }
+        }
+        return matrizSuma;
+    }//Fin del metodo de sumar matrices
+
+    public static int sumaPrimerDiagonal(int[][] numeros) {
+        int respuesta = 0;
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                if (i == j) {
+                    respuesta += numeros[i][j];
+                }
+            }
+        }
+        return respuesta;
+    }//Fin metodo suma primer diagonal
+    
+    public static int sumaSegundaDiagonal(int[][] numeros) {
+        int respuesta = 0;
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                if (i + j == numeros.length - 1) {
+                    respuesta += numeros[i][j];
+                }
+            }
+        }
+        return respuesta;
+    }//Fin metodo suma segunda diagonal
+    
+    public static int TriangularSuperior(int[][] numeros) {
+        int respuesta = 0;
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                if (i < j) {
+                    respuesta += numeros[i][j];
+                }
+            }
+        }
+        return respuesta;
+    }//Fin metodo suma triangular superior
+    
+    public static int TriangularInferior(int[][] numeros) {
+        int respuesta = 0;
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                if (i > j) {
+                    respuesta += numeros[i][j];
+                }
+            }
+        }
+        return respuesta;
+    }//Fin metodo suma triangular inferior
+    
+     public static int[] SumaFilas(int[][] numeros, int filas) {
+       
+        int[] temporal = new int[numeros[filas].length];
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                if () {
+                    temporal[i]+= numeros[i][j];
+                }
+            }
+        }
+        return temporal;
+        
+       
+    }//Fin metodo suma triangular inferior
     
 }//Fin de la clase
