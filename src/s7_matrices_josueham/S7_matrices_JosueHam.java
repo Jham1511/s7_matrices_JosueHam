@@ -22,7 +22,9 @@ public class S7_matrices_JosueHam {
                     + "\n6 -> Suma Triangular Superior"
                     + "\n7 -> Suma Triangular Inferior"
                     + "\n8 -> Suma de filas"
-                    + "\n9 -> Salir del programa"
+                    + "\n9 -> Suma de columnas"
+                    + "\n10 -> Reemplazar esquinas de una columna por ceros"
+                    + "\n11 -> Salir del programa"
                     + "\nIngrese la opcion que desea: ";
             String input = JOptionPane.showInputDialog(null, menu, "Menu", 3);
             opcion = Integer.parseInt(input);
@@ -129,11 +131,37 @@ public class S7_matrices_JosueHam {
                     JOptionPane.showMessageDialog(null, "La suma de las filas es:\n" + imprimirJOptionPane(SumaFilas(numeros,filas)));
                 }//Fin case 8
                 break;
+                
+                case 9: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "La suma de las filas es:\n" + imprimirJOptionPane(SumaColumnas(numeros,columnas)));
+                }//Fin case 9
+                break;
+                
+                case 10: {
+                    String fil = JOptionPane.showInputDialog(null, "Filas de la matriz: ", "Filas de la matriz", 1);
+                    int filas = Integer.parseInt(fil);
+                    String col = JOptionPane.showInputDialog(null, "Columnas de la matriz: ", "Columnas de la matriz", 1);
+                    int columnas = Integer.parseInt(col);
+
+                    int[][] numeros = lectura(filas, columnas);
+                    JOptionPane.showMessageDialog(null, "Matriz antes del reemplazo:\n" + imprimir(numeros));
+                    JOptionPane.showMessageDialog(null, "Matriz despues del reemplazo:\n" + imprimir(ReemplazarEsquinas(numeros)));
+                    
+                }//Fin case 10
+                break;
+                
                 default:
                     JOptionPane.showMessageDialog(null, "Saliendo del programa...");
             }//Fin del switch
 
-        } while (opcion != 9);
+        } while (opcion != 11);
     }//Fin del main 
 
     public static int[][] lectura(int filas, int columnas) {
@@ -266,18 +294,43 @@ public class S7_matrices_JosueHam {
     
      public static int[] SumaFilas(int[][] numeros, int filas) {
        
-        int[] temporal = new int[numeros[filas].length];
+        int[] temporal = new int[filas];
 
         for (int i = 0; i < numeros.length; i++) {
             for (int j = 0; j < numeros[i].length; j++) {
-                if () {
                     temporal[i]+= numeros[i][j];
-                }
             }
         }
         return temporal;
         
        
-    }//Fin metodo suma triangular inferior
+    }//Fin metodo suma de filas
+     
+     public static int[] SumaColumnas(int[][] numeros, int columnas) {
+       
+        int[] temporal = new int[columnas];
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                    temporal[j]+= numeros[i][j];
+            }
+        }
+        return temporal;
+        
+       
+    }//Fin metodo suma de columnas
     
+     public static int[][] ReemplazarEsquinas(int[][] numeros) {
+
+        for (int i = 0; i < numeros.length; i++) {
+            for (int j = 0; j < numeros[i].length; j++) {
+                   if ((i == 0 || i == numeros.length-1) && (j== 0 || j == numeros.length-1)) {
+                       numeros[i][j] = 0;
+                }
+            }
+        }
+        return numeros;
+        
+       
+    }//Fin metodo reemplazar esquinas
 }//Fin de la clase
